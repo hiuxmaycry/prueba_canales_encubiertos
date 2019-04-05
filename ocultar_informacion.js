@@ -1,4 +1,4 @@
-//prueba imagen 
+//prueba imagen
 let fs = require('fs')
 
 // function to encode file data to base64 encoded string
@@ -40,16 +40,16 @@ function agregarBit(code,bit){
 }
 
 function esBloqueSaltoDeLinea(contents,i){
-	return (contents[i] == 'w' && contents[i+1] == 'f' 
+	return (contents[i] == 'w' && contents[i+1] == 'f'
 		&& contents[i+2] == 'P' && contents[i+3] == '/')
 }
 
 function esSaltoDeLinea(contents,i){
-	return (esBloqueSaltoDeLinea(contents,i) || esBloqueSaltoDeLinea(contents,i-1) 
+	return (esBloqueSaltoDeLinea(contents,i) || esBloqueSaltoDeLinea(contents,i-1)
 		|| esBloqueSaltoDeLinea(contents,i-2) || esBloqueSaltoDeLinea(contents,i-3))
 }
 
-let mensaje = process.argv[2] 
+let mensaje = process.argv[2]
 let fileEntrada = process.argv[3]
 let fileSalida = process.argv[4]
 
@@ -57,7 +57,7 @@ let fileSalida = process.argv[4]
 let contents = base64_encode(fileEntrada)
 let mensajeAOcultar = ''
 for (let i = 0; i < mensaje.length; i++) {
-	mensajeAOcultar += '0' + mensaje[i].charCodeAt(0).toString(2)
+	mensajeAOcultar += mensaje[i].charCodeAt(0).toString(2).padStart(8, '0');
 }
 
 console.log('-Mensaje a esconder: '+ mensaje)
@@ -66,7 +66,7 @@ console.log('-Mensaje que debe ocultarse como binario: ')
 console.log(mensajeAOcultar)
 
 let cantidadEncriptada = 0
-let cambioEnElMensaje = [] 
+let cambioEnElMensaje = []
 for (let i = (100); i < contents.length && cantidadEncriptada <= mensajeAOcultar.length; i+=2) {
 	if(esSaltoDeLinea(contents,i)){
 		cambioEnElMensaje.push(contents[i])
@@ -77,7 +77,7 @@ for (let i = (100); i < contents.length && cantidadEncriptada <= mensajeAOcultar
 		} else {
 			cambioEnElMensaje.push(String.fromCharCode(convertirEnPar(contents[i].charCodeAt(0))))
 		}
-		cantidadEncriptada++	
+		cantidadEncriptada++
 	}
 }
 
