@@ -5,9 +5,9 @@
 Para ocultar informacion en una imagen se utilizaron dos scripts en node (version 8.9.0). Primero se debe utilizar el script de ocultar_informacion.js con el siguiente comando:
 
 ```sh
-$ node ocultar_informacion.js <menssage> <fileInput> <fileOutput>
+$ node ocultar_informacion.js <message> <fileInput> <fileOutput>
 ```
-- message: mensaje a ocultar en la imagen sin espacios (Ej: HolaCriptografo)
+- message: mensaje a ocultar en la imagen (Ej: HolaCriptografo)
 - fileInput: url de la imagen de entrada (Ej: download.bmp)
 - fileOutput: url de la imagen de salida modificada con el mensaje oculto (Ej: download_modificado.bmp)
 
