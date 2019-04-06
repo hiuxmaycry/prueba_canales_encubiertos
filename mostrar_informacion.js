@@ -11,16 +11,6 @@ function esImpar(num){
 	return (num%2!=0)
 }
 
-function esBloqueSaltoDeLinea(contents,i){
-	return (contents[i] == 'w' && contents[i+1] == 'f' 
-		&& contents[i+2] == 'P' && contents[i+3] == '/')
-}
-
-function esSaltoDeLinea(contents,i){
-	return (esBloqueSaltoDeLinea(contents,i) || esBloqueSaltoDeLinea(contents,i-1) 
-		|| esBloqueSaltoDeLinea(contents,i-2) || esBloqueSaltoDeLinea(contents,i-3))
-}
-
 function binarytoString(str) {
 	let arrays = [], size = 8
 	str = str.split('')
@@ -35,11 +25,9 @@ let fileEntrada = process.argv[2]
 
 //levanto el archivo con mensaje oculto
 let contents = base64_encode(fileEntrada)
-
 let sigueMensaje = true
 let mensaje = ''
 for (let i = (100); i < contents.length && sigueMensaje; i+=2) {
-	if(!esSaltoDeLinea(contents,i)){
 		//Mientras sea un ASCII impar, en el siguiente bit hay parte del mensaje
 		if(esImpar(contents[i].charCodeAt(0))){
 			mensaje += esImpar(contents[i+1].charCodeAt(0))?'1':'0'
@@ -47,7 +35,6 @@ for (let i = (100); i < contents.length && sigueMensaje; i+=2) {
 		} else {
 			sigueMensaje = false
 		}		
-	}
 }
 
 //Salida del programa

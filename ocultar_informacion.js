@@ -12,26 +12,28 @@ function base64_encode(file) {
 // function to create file from base64 encoded string
 function base64_decode(base64str, file) {
     // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-    var bitmap = new Buffer(base64str, 'base64');
+    let bitmap = new Buffer(base64str, 'base64');
     // write buffer to file
     fs.writeFileSync(file, bitmap);
 }
 
 function convertirEnImpar(num){
-	if(num%2==0)
+	if(num%2==0){
 		return (num+1)
-	else
+	} else {
 		return num
+	}
 }
 
 function convertirEnPar(num){
-	if(num%2!=0)
+	if(num%2!=0){
 		return (num+1)
-	else
+	} else {
 		return num
+	}
 }
 
-function agregarBit(code,bit){
+function convertir(code,bit){
 	if(bit == '0'){
 		return convertirEnPar(code)
 	} else {
@@ -39,14 +41,23 @@ function agregarBit(code,bit){
 	}
 }
 
-function esBloqueSaltoDeLinea(contents,i){
-	return (contents[i] == 'w' && contents[i+1] == 'f' 
-		&& contents[i+2] == 'P' && contents[i+3] == '/')
-}
-
-function esSaltoDeLinea(contents,i){
-	return (esBloqueSaltoDeLinea(contents,i) || esBloqueSaltoDeLinea(contents,i-1) 
-		|| esBloqueSaltoDeLinea(contents,i-2) || esBloqueSaltoDeLinea(contents,i-3))
+function agregarBit(code,bit){
+	let number = convertir(code,bit)
+	if(number == 123)
+	console.log('es un 123')
+	if(number == 44){
+		return 48
+	} else if (number == 47){
+		return 49
+	} else if (number == 123){
+		return 121	
+	} else if (number == 58){
+		return 56	
+	} else if (number == 91){
+		return 89
+	}
+	
+	return number
 }
 
 let mensaje = process.argv[2] 
@@ -57,7 +68,7 @@ let fileSalida = process.argv[4]
 let contents = base64_encode(fileEntrada)
 let mensajeAOcultar = ''
 for (let i = 0; i < mensaje.length; i++) {
-	mensajeAOcultar += '0' + mensaje[i].charCodeAt(0).toString(2)
+	mensajeAOcultar += mensaje[i].charCodeAt(0).toString(2).padStart(8,'0')
 }
 
 console.log('-Mensaje a esconder: '+ mensaje)
@@ -68,9 +79,6 @@ console.log(mensajeAOcultar)
 let cantidadEncriptada = 0
 let cambioEnElMensaje = [] 
 for (let i = (100); i < contents.length && cantidadEncriptada <= mensajeAOcultar.length; i+=2) {
-	if(esSaltoDeLinea(contents,i)){
-		cambioEnElMensaje.push(contents[i])
-	} else {
 		if(cantidadEncriptada < mensajeAOcultar.length){
 			cambioEnElMensaje.push(String.fromCharCode(convertirEnImpar(contents[i].charCodeAt(0))))
 			cambioEnElMensaje.push(String.fromCharCode(agregarBit(contents[i+1].charCodeAt(0),mensajeAOcultar[cantidadEncriptada])))
@@ -78,7 +86,6 @@ for (let i = (100); i < contents.length && cantidadEncriptada <= mensajeAOcultar
 			cambioEnElMensaje.push(String.fromCharCode(convertirEnPar(contents[i].charCodeAt(0))))
 		}
 		cantidadEncriptada++	
-	}
 }
 
 let mensajeEncriptado = cambioEnElMensaje.reduce((valorAnterior, valorActual) => {
@@ -89,7 +96,7 @@ let contentsCambiado
 if(cambioEnElMensaje.length){
 	contentsCambiado = contents.slice(0,100)
 	contentsCambiado = contentsCambiado.concat(mensajeEncriptado)
-	contentsCambiado = contentsCambiado.concat(contents.slice(100+cambioEnElMensaje.length))
+	contentsCambiado = contentsCambiado.concat(contents.slice(100+mensajeEncriptado.length))
 } else {
 	contentsCambiado = contents
 }
