@@ -132,7 +132,6 @@ function agregarBitImpar(code){
 function agregarBit(code,bit){
 	let indice = stringABase64(code)
 	let nuevoIndice = convertir(indice,bit)
-	console.log(code , indice, bit , nuevoIndice, base64AString(nuevoIndice))
 	return base64AString(nuevoIndice)
 }
 
