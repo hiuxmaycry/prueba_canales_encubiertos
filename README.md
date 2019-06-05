@@ -11,6 +11,8 @@ $ node ocultar_informacion.js <message> <fileInput> <fileOutput>
 - fileInput: url de la imagen de entrada (Ej: download.bmp)
 - fileOutput: url de la imagen de salida modificada con el mensaje oculto (Ej: download_modificado.bmp)
 
+Nota: las imagenes que pueden ser utilizadas son aquellas que sean un mapa de bits, por ejemplo bmp.
+
 Ejemplo:
 
 ```sh
@@ -24,3 +26,9 @@ Una vez tengamos la imagen de salida, podemos ver el mensaje que lleva oculto a 
 $ node mostrar_informacion.js <fileInput>
 ```
 - fileInput: url de la imagen que fue modificada en paso anterior (Ej: download_modificado.bmp)
+
+Ejemplo:
+
+```sh
+$ node mostrar_informacion.js downlo/ad_modificado.bmp
+```

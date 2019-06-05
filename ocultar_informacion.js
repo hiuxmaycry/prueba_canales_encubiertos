@@ -84,7 +84,7 @@ function base64_decode(base64str, file) {
 
 function convertirEnImpar(num){
 	if(num%2==0){
-			return (num+1)
+		return (num+1)
 	} else {
 		return num
 	}
@@ -92,8 +92,8 @@ function convertirEnImpar(num){
 
 function convertirEnPar(num){
 	if(num%2!=0){
-		if(num>=64)
-			return 0
+		if(num>=63)
+			return (num-1)
 		else
 			return (num+1)
 	} else {
