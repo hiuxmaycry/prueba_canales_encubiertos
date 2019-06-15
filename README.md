@@ -30,5 +30,5 @@ $ node mostrar_informacion.js <fileInput>
 Ejemplo:
 
 ```sh
-$ node mostrar_informacion.js downlo/ad_modificado.bmp
+$ node mostrar_informacion.js download_modificado.bmp
 ```
